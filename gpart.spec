@@ -1,7 +1,7 @@
 Summary:	Hard disk primary partition table reconstruction
 Name:		gpart
 Version:	0.1h
-Release:	%mkrel 8
+Release:	%mkrel 9
 License:	GPLv2+
 Source0:	%{name}-%{version}.tar.bz2
 Group:		System/Kernel and hardware
