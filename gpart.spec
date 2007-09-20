@@ -1,8 +1,8 @@
 Summary:	Hard disk primary partition table reconstruction
 Name:		gpart
 Version:	0.1h
-Release:	%mkrel 7
-License:	GPL
+Release:	%mkrel 8
+License:	GPLv2+
 Source0:	%{name}-%{version}.tar.bz2
 Group:		System/Kernel and hardware
 URL:		http://home.pages.de/~michab/gpart/
@@ -43,8 +43,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc COPYING Changes README
+%doc Changes README
 %{_bindir}/%{name}
 %{_mandir}/man8/*
-
 
