@@ -16,7 +16,6 @@ Patch102:	gpart-0.1h-largefile.patch
 Patch103:	gpart-0.1h-makefile.patch
 Patch104:	gpart-0.1h-syscall.patch
 Patch105:	gpart-0.1h-varname.patch
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 
 %description
 A tool which tries to guess the primary partition table of a PC-type hard disk
