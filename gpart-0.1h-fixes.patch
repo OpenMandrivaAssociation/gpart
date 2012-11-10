@@ -1,0 +1,132 @@
+--- gpart-0.1h/src/gm_ntfs.h.fixes	2001-01-29 21:33:58.000000000 +0100
++++ gpart-0.1h/src/gm_ntfs.h	2003-08-13 19:39:38.000000000 +0200
+@@ -17,6 +17,10 @@
+ #ifndef _GM_NTFS_H
+ #define _GM_NTFS_H
+ 
++#include <stdint.h>
++#include <endian.h>
++#include <byteswap.h>
++
+ /*
+  * ntfs information/macros, taken from the Linux kernel sources.
+  */
+@@ -29,32 +33,43 @@
+ /* 'NTFS' in little endian */
+ #define NTFS_SUPER_MAGIC	0x5346544E
+ 
+-#if defined(i386) || defined(__i386__) || defined(__alpha__)
+-
+ /* unsigned integral types */
+ #ifndef NTFS_INTEGRAL_TYPES
+ #define NTFS_INTEGRAL_TYPES
+-typedef unsigned char		ntfs_u8;
+-typedef unsigned short		ntfs_u16;
+-typedef unsigned int		ntfs_u32;
+-typedef s64_t			ntfs_u64;
++typedef uint8_t			ntfs_u8;
++typedef uint16_t		ntfs_u16;
++typedef uint32_t		ntfs_u32;
++typedef uint64_t		ntfs_u64;
++typedef int8_t			ntfs_s8;
++typedef int16_t			ntfs_s16;
+ #endif /* NTFS_INTEGRAL_TYPES */
+-#endif /* defined(i386) || defined(__i386__) || defined(__alpha__) */
+ 
++/* NOTE: we assume data is aligned */
++#if __BYTE_ORDER == __LITTLE_ENDIAN
++#define LE_GET_16(p)	(*(ntfs_u16 *)(p))
++#define LE_GET_32(p)	(*(ntfs_u32 *)(p))
++#define LE_GET_64(p)	(*(ntfs_u64 *)(p))
++#elif __BYTE_ORDER == __BIG_ENDIAN
++#define LE_GET_16(p)	(bswap_16(*(ntfs_u16 *)(p)))
++#define LE_GET_32(p)	(bswap_32(*(ntfs_u32 *)(p)))
++#define LE_GET_64(p)	(bswap_64(*(ntfs_u64 *)(p)))
++#else
++#error "Unknown architecture byteorder"
++#endif
+ 
+ /* Macros reading unsigned integers from a byte pointer */
+ /* these should work for all little endian machines */
+ #define NTFS_GETU8(p)		(*(ntfs_u8*)(p))
+-#define NTFS_GETU16(p)		(*(ntfs_u16*)(p))
+-#define NTFS_GETU24(p)		(NTFS_GETU32(p) & 0xFFFFFF)
+-#define NTFS_GETU32(p)		(*(ntfs_u32*)(p))
+-#define NTFS_GETU64(p)		(*(ntfs_u64*)(p))
++#define NTFS_GETU16(p)		(LE_GET_16(p))
++#define NTFS_GETU24(p)		(NTFS_GETU16(p) | (NETFS_GETU8(((ntfs_u8 *)(p)) + 2) << 16))
++#define NTFS_GETU32(p)		(LE_GET_32(p))
++#define NTFS_GETU64(p)		(LE_GET_64(p))
+ 
+ /* Macros reading signed integers, returning int */
+-#define NTFS_GETS8(p)		((int)(*(char*)(p)))
+-#define NTFS_GETS16(p)		((int)(*(short*)(p)))
+-#define NTFS_GETS24(p)		(NTFS_GETU24(p) < 0x800000 ? (int)NTFS_GETU24(p) :
+-
+-
++#define NTFS_GETS8(p)		((int)(ntfs_s8)NTFS_GETU8(p))
++#define NTFS_GETS16(p)		((int)(ntfs_s16)NTFS_GETU16(p))
++#define NTFS_GETS24(p)		(NTFS_GETU24(p) < 0x800000 ? \
++								(int)NTFS_GETU24(p) : \
++								(int)(NTFS_GETU24(p) - 0x1000000))
+ 
+ #endif /* _GM_NTFS_H */
+--- gpart-0.1h/src/gpart.h.fixes	2001-01-31 00:07:29.000000000 +0100
++++ gpart-0.1h/src/gpart.h	2003-08-13 19:39:49.000000000 +0200
+@@ -17,6 +17,7 @@
+ #ifndef _GPART_H
+ #define _GPART_H
+ 
++#include <endian.h>
+ #include "errmsgs.h"
+ #include "l64seek.h"
+ 
+@@ -31,7 +32,7 @@ typedef unsigned char byte_t;
+  * endianness (incomplete, later)
+  */
+ 
+-#if defined(__i386__) || defined(__alpha__)
++#if __BYTE_ORDER == __LITTLE_ENDIAN
+ #	define le16(x)	(x)		/* x as little endian */
+ #	define be16(x)	((((x)&0xff00)>>8)			| \
+ 			(((x)&0x00ff)<<8))
+@@ -49,7 +50,7 @@ typedef unsigned char byte_t;
+ 			(((x)&0x0000000000ff0000LL)<<24)	| \
+ 			(((x)&0x000000000000ff00LL)<<40)	| \
+ 			(((x)&0x00000000000000ffLL)<<56))
+-#else /* bigendian */
++#elif __BYTE_ORDER == __BIG_ENDIAN /* bigendian */
+ #	define le16(x)	((((x)&0xff00)>>8)			| \
+ 			(((x)&0x00ff)<<8))
+ #	define be16(x)	(x)
+@@ -67,6 +68,8 @@ typedef unsigned char byte_t;
+ 			(((x)&0x000000000000ff00LL)<<40)	| \
+ 			(((x)&0x00000000000000ffLL)<<56))
+ #	define be64(x)	(x)
++#else
++#	error "Unknown architecture byteorder"
+ #endif
+ 
+ 
+--- gpart-0.1h/src/gm_xfs.h.fixes	2001-02-07 20:16:32.000000000 +0100
++++ gpart-0.1h/src/gm_xfs.h	2003-08-13 19:41:01.000000000 +0200
+@@ -17,6 +17,8 @@
+ #ifndef _GM_XFS_H
+ #define _GM_XFS_H
+ 
++#include <stdint.h>
++
+ /* imported from asm/types.h */
+ typedef __signed__ char __s8;
+ typedef unsigned char __u8;
+--- gpart-0.1h/src/l64seek.c.fixes	2000-12-13 23:54:11.000000000 +0100
++++ gpart-0.1h/src/l64seek.c	2003-08-13 19:43:04.000000000 +0200
+@@ -46,7 +46,7 @@ off64_t l64seek(int fd,off64_t offset,in
+ 		ret = (off64_t)-1;
+ #endif
+ 
+-#if defined(__FreeBSD__) || (defined(__linux__) && defined(__alpha__))
++#if defined(__FreeBSD__) || (defined(__linux__) && !defined(__i386__))
+ 	ret = lseek(fd,offset,whence);
+ #endif
+ 

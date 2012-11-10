@@ -1,0 +1,11 @@
+--- gpart-0.1h/src/Makefile.makefile	2001-01-30 12:01:08.000000000 -0500
++++ gpart-0.1h/src/Makefile	2007-02-03 22:04:49.000000000 -0500
+@@ -33,7 +33,7 @@
+ 
+ install: $(prg)
+ 	$(INSTALL) -d $(bindir)
+-	$(INSTALL) -s $(prg) $(bindir)
++	$(INSTALL) $(prg) $(bindir)
+ 
+ uninstall:
+ 	$(RM) $(bindir)/$(prg)

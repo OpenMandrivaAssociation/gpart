@@ -1,0 +1,20 @@
+--- gpart-0.1h/src/disku.c.orig	2003-04-28 16:18:04.000000000 +0200
++++ gpart-0.1h/src/disku.c	2003-04-28 16:19:48.000000000 +0200
+@@ -24,6 +24,7 @@
+ #if defined(__linux__)
+ #include <sys/mount.h>
+ #include <linux/hdreg.h>
++#include <errno.h>
+ #endif
+ 
+ #if defined(__FreeBSD__)
+--- gpart-0.1h/src/l64seek.h.orig	2003-04-28 16:23:24.000000000 +0200
++++ gpart-0.1h/src/l64seek.h	2003-04-28 16:24:13.000000000 +0200
+@@ -29,6 +29,7 @@
+ #if defined(__linux__)
+ #	include <linux/unistd.h>
+ #	include <sys/types.h>
++#	include <errno.h>
+ 	typedef int64_t off64_t;
+ #endif
+ 

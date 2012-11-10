@@ -1,0 +1,11 @@
+--- gpart-0.1h/make.defs.largefile	2006-10-22 14:49:44.000000000 -0400
++++ gpart-0.1h/make.defs	2006-10-22 14:51:12.000000000 -0400
+@@ -2,7 +2,7 @@
+ #
+ #
+ CC      = gcc
+-CFLAGS  = -Wall -O2
++CFLAGS  = -Wall -O2 -D_FILE_OFFSET_BITS=64
+ LDFLAGS =
+ MAKEDEP = gcc -M
+ INSTALL = install

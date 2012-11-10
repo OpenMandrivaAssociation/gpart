@@ -1,0 +1,12 @@
+diff -ru gpart-0.1h.orig/make.defs gpart-0.1h/make.defs
+--- gpart-0.1h.orig/make.defs	2001-01-29 14:17:12.000000000 -0500
++++ gpart-0.1h/make.defs	2005-06-08 11:11:48.000000000 -0400
+@@ -2,7 +2,7 @@
+ #
+ #
+ CC      = gcc
+-CFLAGS  = -Wall -O2 -pedantic
++CFLAGS  = -Wall -O2
+ LDFLAGS =
+ MAKEDEP = gcc -M
+ INSTALL = install

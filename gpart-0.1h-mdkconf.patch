@@ -1,0 +1,11 @@
+--- gpart-0.1h/inst.defs.chmou	Wed Dec 13 23:45:49 2000
++++ gpart-0.1h/inst.defs	Sun Feb 18 14:34:39 2001
+@@ -1,7 +1,7 @@
+ #
+ # installation directories for gpart
+ #
+-prefix=/usr/local
++prefix=/usr/
+ bindir=$(prefix)/bin
+ libdir=$(prefix)/lib
+ mandir=$(prefix)/man
