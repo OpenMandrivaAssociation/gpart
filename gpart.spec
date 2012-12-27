@@ -14,6 +14,7 @@ Patch4:		gpart-0.1h-open-mode.patch
 Patch5:		gpart-0.1h-ntfs-winxp.patch
 Patch6:		gpart-0.1h-imagefile.patch
 Patch7:		gpart-0.1h-reiserfs.patch
+Patch8:		gpart-0.1h-whole-program.patch
 # Fedora patches
 Patch100:	gpart-0.1h-cflags.patch
 Patch101:	gpart-0.1h-errno.patch
@@ -46,9 +47,10 @@ QNX 4 FS, Reiser FS, LVM physical volumes, BeOS FS, SGI XFS.
 %patch5 -p1 -b .ntfs_winxp~
 %patch6 -p1 -b .imagefile~
 %patch7 -p1 -b .gpart~
+%patch8 -p1 -b .wholeprogram~
 
 %build
-%make OPTFLAGS="%{optflags}" LDFLAGS="%{ldflags}"
+%make OPTFLAGS="%{optflags}" LDFLAGS="%{ldflags}" WHOLE_PROGRAM=1
 
 %install
 install -m755 src/%{name} -D %{buildroot}%{_bindir}/%{name}
@@ -61,6 +63,8 @@ install -m644 man/%{name}.8 -D %{buildroot}%{_mandir}/man8/%{name}.8
 
 %changelog
 * Thu Dec 27 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 0.1h-17
+- add support for compiling with -fwhole-program (P8)
+- fix permission of man page
 - add reiserfs support (P7, from Debian)
 - add support for image files (P6, from Debian)
 - support NTFS on winxp (P5, from Debian)

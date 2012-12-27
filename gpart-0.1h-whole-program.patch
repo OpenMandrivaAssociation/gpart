@@ -1,0 +1,16 @@
+--- gpart-0.1h/src/Makefile~	2012-12-27 08:53:45.572256015 +0100
++++ gpart-0.1h/src/Makefile	2012-12-27 09:02:21.901737129 +0100
+@@ -30,8 +30,13 @@ allsrc=Makefile $(src) $(hdr)
+ 
+ all: $(prg)
+ 
++ifndef WHOLE_PROGRAM
+ $(prg): $(obj)
+ 	$(CC) -o $@ $(LDFLAGS) $(obj) $(LIBS)
++else
++$(prg):
++	$(CC) -o $@ -Wl,--no-warn-common -flto -fwhole-program $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $(src) $(LIBS)
++endif
+ 
+ install: $(prg)
+ 	$(INSTALL) -d $(bindir)
