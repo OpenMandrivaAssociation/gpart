@@ -1,0 +1,12 @@
+--- gpart-0.1h/make.defs~	2012-12-27 08:22:06.014348373 +0100
++++ gpart-0.1h/make.defs	2012-12-27 08:26:04.095355162 +0100
+@@ -2,7 +2,8 @@
+ #
+ #
+ CC      = gcc
+-CFLAGS  = -Wall -O2 -D_FILE_OFFSET_BITS=64
++OPTFLAGS= -O2
++CFLAGS  = -Wall $(OPTFLAGS) -D_FILE_OFFSET_BITS=64
+ LDFLAGS =
+ MAKEDEP = gcc -M
+ INSTALL = install

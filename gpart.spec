@@ -9,6 +9,7 @@ URL:		http://home.pages.de/~michab/gpart/
 Patch0:		gpart-0.1h-mdkconf.patch
 Patch1:		gpart-errno.patch
 Patch2:		gpart-0.1h-fixes.patch
+Patch3:		gpart-0.1h-optflags.patch
 # Fedora patches
 Patch100:	gpart-0.1h-cflags.patch
 Patch101:	gpart-0.1h-errno.patch
@@ -36,9 +37,10 @@ QNX 4 FS, Reiser FS, LVM physical volumes, BeOS FS, SGI XFS.
 %patch103 -p1 -b .syscall~
 %patch104 -p1 -b .largefile~
 %patch105 -p1 -b .makefile~
+%patch3 -p1 -b .optflags~
 
 %build
-%make 
+%make OPTFLAGS="%{optflags}" LDFLAGS="%{ldflags}"
 
 %install
 install -m755 src/%{name} -D %{buildroot}%{_bindir}/%{name}
@@ -51,6 +53,7 @@ install -m755 man/%{name}.8 -D %{buildroot}%{_mandir}/man8/%{name}.8
 
 %changelog
 * Thu Dec 27 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 0.1h-17
+- compile with %%optflags & link with %%ldflags (P3)
 - cleanups
 
 * Tue May 03 2011 Oden Eriksson <oeriksson@mandriva.com> 0.1h-15mdv2011.0
