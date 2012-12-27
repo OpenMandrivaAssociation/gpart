@@ -3,7 +3,7 @@
 Summary:	Hard disk primary partition table reconstruction
 Name:		gpart
 Version:	0.1h
-Release:	17
+Release:	18
 License:	GPLv2+
 Source0:	%{name}-%{version}.tar.bz2
 Group:		System/Kernel and hardware
@@ -80,7 +80,7 @@ cp -a * .uclibc
 
 %install
 %if %{with uclibc}
-install -m755 src/%{name} -D %{buildroot}%{uclibc_root}%{_bindir}/%{name}
+install -m755 .uclibc/src/%{name} -D %{buildroot}%{uclibc_root}%{_bindir}/%{name}
 %endif
 
 install -m755 src/%{name} -D %{buildroot}%{_bindir}/%{name}
@@ -97,6 +97,9 @@ install -m644 man/%{name}.8 -D %{buildroot}%{_mandir}/man8/%{name}.8
 %endif
 
 %changelog
+* Thu Dec 27 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 0.1h-18
+- really package the uclibc binary in the uclibc package
+
 * Thu Dec 27 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 0.1h-17
 - do uclibc build
 - add support for compiling with -fwhole-program (P8)
