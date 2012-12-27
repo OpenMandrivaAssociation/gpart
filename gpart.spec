@@ -52,7 +52,7 @@ QNX 4 FS, Reiser FS, LVM physical volumes, BeOS FS, SGI XFS.
 
 %install
 install -m755 src/%{name} -D %{buildroot}%{_bindir}/%{name}
-install -m755 man/%{name}.8 -D %{buildroot}%{_mandir}/man8/%{name}.8
+install -m644 man/%{name}.8 -D %{buildroot}%{_mandir}/man8/%{name}.8
 
 %files
 %doc Changes README
