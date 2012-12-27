@@ -13,6 +13,7 @@ Patch3:		gpart-0.1h-optflags.patch
 Patch4:		gpart-0.1h-open-mode.patch
 Patch5:		gpart-0.1h-ntfs-winxp.patch
 Patch6:		gpart-0.1h-imagefile.patch
+Patch7:		gpart-0.1h-reiserfs.patch
 # Fedora patches
 Patch100:	gpart-0.1h-cflags.patch
 Patch101:	gpart-0.1h-errno.patch
@@ -44,6 +45,7 @@ QNX 4 FS, Reiser FS, LVM physical volumes, BeOS FS, SGI XFS.
 %patch4 -p1 -b .openmode~
 %patch5 -p1 -b .ntfs_winxp~
 %patch6 -p1 -b .imagefile~
+%patch7 -p1 -b .gpart~
 
 %build
 %make OPTFLAGS="%{optflags}" LDFLAGS="%{ldflags}"
@@ -59,6 +61,7 @@ install -m755 man/%{name}.8 -D %{buildroot}%{_mandir}/man8/%{name}.8
 
 %changelog
 * Thu Dec 27 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 0.1h-17
+- add reiserfs support (P7, from Debian)
 - add support for image files (P6, from Debian)
 - support NTFS on winxp (P5, from Debian)
 - specify missing mode to open(2) as required (P4, from Debian)
