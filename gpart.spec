@@ -1,3 +1,5 @@
+%bcond_without	uclibc
+
 Summary:	Hard disk primary partition table reconstruction
 Name:		gpart
 Version:	0.1h
@@ -22,8 +24,23 @@ Patch102:	gpart-0.1h-largefile.patch
 Patch103:	gpart-0.1h-makefile.patch
 Patch104:	gpart-0.1h-syscall.patch
 Patch105:	gpart-0.1h-varname.patch
+%if %{with uclibc}
+BuildRequires:	uClibc-devel
+%endif
 
 %description
+A tool which tries to guess the primary partition table of a PC-type hard disk
+in case the primary partition table in sector 0 is damaged, incorrect or
+deleted. The guessed table can be written to a file or device. Supported
+(guessable) filesystem or partition types: DOS/Windows FAT, Linux ext2 and
+swap, OS/2 HPFS, Windows NTFS, FreeBSD and Solaris/x86 disklabels, Minix FS,
+QNX 4 FS, Reiser FS, LVM physical volumes, BeOS FS, SGI XFS.
+
+%package -n	uclibc-%{name}
+Summary:	Hard disk primary partition table reconstruction (uClibc build)
+Group:		System/Kernel and hardware
+
+%description -n	uclibc-%{name}
 A tool which tries to guess the primary partition table of a PC-type hard disk
 in case the primary partition table in sector 0 is damaged, incorrect or
 deleted. The guessed table can be written to a file or device. Supported
@@ -49,10 +66,23 @@ QNX 4 FS, Reiser FS, LVM physical volumes, BeOS FS, SGI XFS.
 %patch7 -p1 -b .gpart~
 %patch8 -p1 -b .wholeprogram~
 
+%if %{with uclibc}
+mkdir .uclibc
+cp -a * .uclibc
+%endif
+
 %build
+%if %{with uclibc}
+%make -C .uclibc CC="%{uclibc_cc}" OPTFLAGS="%{uclibc_cflags}" LDFLAGS="%{ldflags}" WHOLE_PROGRAM=1
+%endif
+
 %make OPTFLAGS="%{optflags}" LDFLAGS="%{ldflags}" WHOLE_PROGRAM=1
 
 %install
+%if %{with uclibc}
+install -m755 src/%{name} -D %{buildroot}%{uclibc_root}%{_bindir}/%{name}
+%endif
+
 install -m755 src/%{name} -D %{buildroot}%{_bindir}/%{name}
 install -m644 man/%{name}.8 -D %{buildroot}%{_mandir}/man8/%{name}.8
 
@@ -61,8 +91,14 @@ install -m644 man/%{name}.8 -D %{buildroot}%{_mandir}/man8/%{name}.8
 %{_bindir}/%{name}
 %{_mandir}/man8/*
 
+%if %{with uclibc}
+%files -n uclibc-%{name}
+%{uclibc_root}%{_bindir}/%{name}
+%endif
+
 %changelog
 * Thu Dec 27 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 0.1h-17
+- do uclibc build
 - add support for compiling with -fwhole-program (P8)
 - fix permission of man page
 - add reiserfs support (P7, from Debian)
