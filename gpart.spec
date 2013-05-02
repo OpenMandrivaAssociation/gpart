@@ -5,9 +5,9 @@ Name:		gpart
 Version:	0.1h
 Release:	18
 License:	GPLv2+
-Source0:	%{name}-%{version}.tar.bz2
 Group:		System/Kernel and hardware
-URL:		http://home.pages.de/~michab/gpart/
+Url:		http://home.pages.de/~michab/gpart/
+Source0:	%{name}-%{version}.tar.bz2
 Patch0:		gpart-0.1h-mdkconf.patch
 Patch1:		gpart-errno.patch
 Patch2:		gpart-0.1h-fixes.patch
@@ -95,70 +95,4 @@ install -m644 man/%{name}.8 -D %{buildroot}%{_mandir}/man8/%{name}.8
 %files -n uclibc-%{name}
 %{uclibc_root}%{_bindir}/%{name}
 %endif
-
-%changelog
-* Thu Dec 27 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 0.1h-18
-- really package the uclibc binary in the uclibc package
-
-* Thu Dec 27 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 0.1h-17
-- do uclibc build
-- add support for compiling with -fwhole-program (P8)
-- fix permission of man page
-- add reiserfs support (P7, from Debian)
-- add support for image files (P6, from Debian)
-- support NTFS on winxp (P5, from Debian)
-- specify missing mode to open(2) as required (P4, from Debian)
-- compile with %%optflags & link with %%ldflags (P3)
-- cleanups
-
-* Tue May 03 2011 Oden Eriksson <oeriksson@mandriva.com> 0.1h-15mdv2011.0
-+ Revision: 664918
-- mass rebuild
-
-* Thu Dec 02 2010 Oden Eriksson <oeriksson@mandriva.com> 0.1h-14mdv2011.0
-+ Revision: 605493
-- rebuild
-
-* Wed Mar 17 2010 Oden Eriksson <oeriksson@mandriva.com> 0.1h-13mdv2010.1
-+ Revision: 522744
-- rebuilt for 2010.1
-
-* Wed Sep 02 2009 Christophe Fergeau <cfergeau@mandriva.com> 0.1h-12mdv2010.0
-+ Revision: 425020
-- rebuild
-
-* Thu Apr 09 2009 Funda Wang <fwang@mandriva.org> 0.1h-11mdv2009.1
-+ Revision: 365301
-- rediff syscall patch
-
-* Tue Jun 17 2008 Thierry Vignaud <tv@mandriva.org> 0.1h-11mdv2009.0
-+ Revision: 221098
-- rebuild
-
-* Sat Jan 12 2008 Thierry Vignaud <tv@mandriva.org> 0.1h-10mdv2008.1
-+ Revision: 150229
-- rebuild
-- kill re-definition of %%buildroot on Pixel's request
-
-  + Olivier Blin <oblin@mandriva.com>
-    - restore BuildRoot
-
-* Thu Sep 20 2007 Adam Williamson <awilliamson@mandriva.org> 0.1h-9mdv2008.0
-+ Revision: 91493
-- sync patches with fedora (various useful fixes, including one to fix build)
-- rebuild for 2008
-- don't package COPYING
-- new license policy
-
-
-* Fri Mar 16 2007 Oden Eriksson <oeriksson@mandriva.com> 0.1h-7mdv2007.1
-+ Revision: 145247
-- Import gpart
-
-* Fri Mar 16 2007 Oden Eriksson <oeriksson@mandriva.com> 0.1h-7mdv2007.1
-- use the %%mrel macro
-- bunzip patches
-
-* Wed Feb 02 2005 Lenny Cartier <lenny@mandrakesoft.com> 0.1h-6mdk
-- rebuild
 
