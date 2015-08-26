@@ -1,9 +1,9 @@
-%bcond_without	uclibc
+%bcond_with	uclibc
 
 Summary:	Hard disk primary partition table reconstruction
 Name:		gpart
 Version:	0.1h
-Release:	27
+Release:	28
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://home.pages.de/~michab/gpart/
