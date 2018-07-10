@@ -1,7 +1,7 @@
 Summary:	Hard disk primary partition table reconstruction
 Name:		gpart
 Version:	0.1h
-Release:	29
+Release:	30
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://home.pages.de/~michab/gpart/
