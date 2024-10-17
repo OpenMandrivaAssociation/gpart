@@ -4,7 +4,7 @@ Version:	0.1h
 Release:	32
 License:	GPLv2+
 Group:		System/Kernel and hardware
-Url:		http://home.pages.de/~michab/gpart/
+Url:		https://home.pages.de/~michab/gpart/
 Source0:	%{name}-%{version}.tar.bz2
 Patch0:		gpart-0.1h-mdkconf.patch
 Patch1:		gpart-errno.patch
